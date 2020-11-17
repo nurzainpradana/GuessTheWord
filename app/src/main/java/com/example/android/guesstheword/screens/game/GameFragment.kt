@@ -62,15 +62,13 @@ class GameFragment : Fragment() {
     /** Methods for buttons presses **/
 
     private fun onSkip() {
-        viewModel.score--
-        viewModel.nextWord()
+        viewModel.onSkip()
         updateWordText()
         updateScoreText()
     }
 
     private fun onCorrect() {
-        viewModel.score++
-        viewModel.nextWord()
+        viewModel.onCorrect()
         updateWordText()
         updateScoreText()
     }
@@ -81,7 +79,9 @@ class GameFragment : Fragment() {
 
     private fun gameFinished() {
         val action = GameFragmentDirections.actionGameToScore()
-        action.score = viewModel.score
+        //action.score = viewModel.score.value!!
+        action.score = viewModel.score.value?: 0
+        // Kalau nilai bernilai null, gunakan nilai sebelah kanan, jika tidak gunakan nilai disebelah kiri
         NavHostFragment.findNavController(this).navigate(action)
     }
 
@@ -89,10 +89,10 @@ class GameFragment : Fragment() {
     /** Methods for updating the UI **/
 
     private fun updateWordText() {
-        binding.wordText.text = viewModel.word
+        binding.wordText.text = viewModel.word.value
     }
 
     private fun updateScoreText() {
-        binding.scoreText.text = viewModel.score.toString()
+        binding.scoreText.text = viewModel.score.value.toString()
     }
 }
