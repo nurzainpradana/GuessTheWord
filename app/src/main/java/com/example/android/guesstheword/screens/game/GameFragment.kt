@@ -56,6 +56,10 @@ class GameFragment : Fragment() {
             binding.wordText.text = newWord
         } )
 
+        viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer { hasFinished ->
+            if (hasFinished) gameFinished()
+        })
+
         binding.correctButton.setOnClickListener { onCorrect() }
         binding.skipButton.setOnClickListener { onSkip() }
         binding.endGameButton.setOnClickListener { onEndGame() }
@@ -91,6 +95,7 @@ class GameFragment : Fragment() {
         action.score = viewModel.score.value?: 0
         // Kalau nilai bernilai null, gunakan nilai sebelah kanan, jika tidak gunakan nilai disebelah kiri
         NavHostFragment.findNavController(this).navigate(action)
+        viewModel.onGameFinishCompleted()
     }
 
 
