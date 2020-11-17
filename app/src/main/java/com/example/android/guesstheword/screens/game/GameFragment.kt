@@ -48,21 +48,20 @@ class GameFragment : Fragment() {
         )
 
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
-            binding.scoreText.text = newScore.toString()
-        } )
-
-        viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
-            binding.wordText.text = newWord
-        } )
+//        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
+//            binding.scoreText.text = newScore.toString()
+//        } )
+//
+//        viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
+//            binding.wordText.text = newWord
+//        } )
 
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer { hasFinished ->
             if (hasFinished) gameFinished()
         })
 
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
-        binding.endGameButton.setOnClickListener { onEndGame() }
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
 //        updateScoreText()
 //        updateWordText()
